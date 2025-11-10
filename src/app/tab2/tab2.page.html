@@ -1,0 +1,47 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>
+      Buscar película
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-toolbar>
+  <ion-searchbar placeholder="Buscar película" (ionChange)="onSearchChange($event)" [debounce]="700" animated
+    [value]="search" [showCancelButton]="'focus'">
+  </ion-searchbar>
+</ion-toolbar>
+
+<ion-content [fullscreen]="true">
+  <ion-grid *ngIf="isSearching">
+    <ion-row>
+      <ion-col style="text-align: center;">
+        <ion-spinner name="crescent"></ion-spinner>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-list *ngIf="movies.length === 0">
+    <ion-list-header>
+      <ion-label>Populares</ion-label>
+      <ion-button routerLink="/populars">Ver todos</ion-button>
+    </ion-list-header>
+    <ion-item *ngFor="let movie of populars$ | async" (click)="onClick(movie.title)">
+      <ion-label>{{ movie.title }}</ion-label>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid>
+    <ion-row class="ion-align-self-center">
+      <ion-col size="6" *ngFor="let movie of movies">
+        <app-slide [movie]="movie" pathType="poster_path">
+          <ng-container slideDescription>
+            <ion-card-header>
+              <ion-card-subtitle>{{ movie.release_date | date:'YYYY' }}</ion-card-subtitle>
+              <ion-card-title>{{ movie.title }}</ion-card-title>
+            </ion-card-header>
+          </ng-container>
+        </app-slide>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

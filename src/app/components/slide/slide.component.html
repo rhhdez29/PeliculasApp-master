@@ -1,0 +1,6 @@
+<ion-card (click)="onClick()" mode="md">
+  <!-- TODO: Aplly condition when image doesn't exits -->
+  <img [src]="movie[pathType] | image" >
+  <!-- <ion-img [src]="movie[pathType] | image"></ion-img> -->
+  <ng-content select="[slideDescription]"></ng-content>
+</ion-card>

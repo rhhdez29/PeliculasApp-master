@@ -1,0 +1,38 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Favoritos</ion-title>
+    <ion-buttons slot="end">
+      <ion-button *ngIf="selectedGenre" (click)="selectedGenre = null">
+        <ion-icon slot="icon-only" name="arrow-undo-outline"></ion-icon>
+      </ion-button>
+      <ion-button (click)="presentPicker()">
+        <ion-icon slot="icon-only" name="options-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-grid>
+    <ion-row *ngIf="movies | genres:selectedGenre?.id as perGenres">
+      <ion-col size="6" sizeSm="4" sizeMd="3" sizeLg="2" *ngFor="let movie of perGenres">
+        <app-slide [movie]="movie" pathType="poster_path">
+          <ng-container slideDescription>
+            <ion-card-header>
+              <ion-card-subtitle>{{ movie.release_date | date:'YYYY' }}</ion-card-subtitle>
+              <ion-card-title>{{ movie.title }}</ion-card-title>
+            </ion-card-header>
+          </ng-container>
+        </app-slide>
+      </ion-col>
+      <ion-col *ngIf="selectedGenre && perGenres.length === 0">
+        <h4> No hay películas de "{{ selectedGenre?.name }}" en tus favoritos </h4>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="movies.length === 0">
+      <ion-col size="12">
+        <h4>Sin favoritos por aquí</h4>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/" text="Regresar" color="primary"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Populares</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" sizeSm="4" sizeMd="3" sizeLg="2" *ngFor="let movie of popularMovies$ | async">
+        <app-slide [movie]="movie" pathType="poster_path">
+          <ng-container slideDescription>
+            <ion-card-header>
+              <ion-card-subtitle>{{ movie.release_date | date:'YYYY' }}</ion-card-subtitle>
+              <ion-card-title>{{ movie.title }}</ion-card-title>
+            </ion-card-header>
+          </ng-container>
+        </app-slide>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-infinite-scroll threshold="25%" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="crescent" loadingText="Cargando...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+</ion-content>

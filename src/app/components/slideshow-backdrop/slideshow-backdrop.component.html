@@ -1,0 +1,7 @@
+<app-header [title]="title"></app-header>
+
+<ion-slides [options]="slidesOptions">
+  <ion-slide *ngFor="let movie of movies">
+    <app-slide [movie]="movie"></app-slide>
+  </ion-slide>
+</ion-slides>
